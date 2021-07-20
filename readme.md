@@ -1,1 +1,1 @@
-Sample Javascript App for TODO List.
+TODO List App.
