@@ -1,0 +1,186 @@
+<!doctype html>
+<html lang="en">
+
+<head>
+    <!-- Required meta tags -->
+    <meta charset="utf-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no">
+
+    <!-- Bootstrap CSS -->
+
+    <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.0.2/dist/css/bootstrap.min.css" rel="stylesheet"
+        integrity="sha384-EVSTQN3/azprG1Anm3QDgpJLIm9Nao0Yz1ztcQTwFspd3yD65VohhpuuCOmLASjC" crossorigin="anonymous">
+
+    <title>TODO List</title>
+</head>
+
+<body>
+    <nav class="navbar navbar-expand-lg navbar-dark bg-dark">
+        <a class="navbar-brand" href="#">TODO List</a>
+        <button class="navbar-toggler" type="button" data-toggle="collapse" data-target="#navbarSupportedContent"
+            aria-controls="navbarSupportedContent" aria-expanded="false" aria-label="Toggle navigation">
+            <span class="navbar-toggler-icon"></span>
+        </button>
+
+        <div class="collapse navbar-collapse" id="navbarSupportedContent">
+            <ul class="navbar-nav mr-auto">
+                <li class="nav-item active">
+                    <a class="nav-link" href="#">Home <span class="sr-only"></span></a>
+                </li>
+                
+                
+            </ul>
+            <!-- <form class="navbar-nav ml-auto">
+                <input class="form-control mr-sm-0" type="search" placeholder="Search" aria-label="Search">
+                <button class="btn btn-outline-success my-2 my-sm-0" type="submit">Search</button>
+            </form> -->
+        </div>
+    </nav>
+    <div class="container my-4">
+        <h2 class="text-center">TODO List</h2>
+        
+            <div class="mb-3">
+                <label for="title">Title</label>
+                <input type="text" class="form-control" id="title" aria-describedby="additem">
+                <div id="additem" class="form-text">Add an item to the List.</div>
+            </div>
+
+            <div class="mb-3">
+                <label for="description" class="form-label">Description </label>
+                <textarea class="form-control" id="description" rows="3"></textarea>
+            </div>
+            <button id="add"  class="btn btn-primary" >Add to List</button>
+            <button id="clear" class="btn btn-primary" onclick="clearStorage()">Clear List</button>
+
+        <div id="items" class="my-4">
+            <h2>Your Items</h2>
+            <table class="table">
+                <thead>
+                    <tr>
+                        <th scope="col">Sr No.</th>
+                        <th scope="col">Title</th>
+                        <th scope="col">Description</th>
+                        <th scope="col">Action</th>
+                    </tr>
+                </thead>
+                <tbody id="tableBody">
+                    <tr>
+                        <th scope="row">1</th>
+                        <td>Study Maths</td>
+                        <td>Practice is necessary for Maths.</td>
+                        <td><button class="btn btn-sm btn-primary">Delete</button></td>
+                    </tr>
+
+                </tbody>
+            </table>
+        </div>
+    </div>
+
+
+
+    <!-- Optional JavaScript; choose one of the two! -->
+
+    <!-- Option 1: Bootstrap Bundle with Popper -->
+
+    <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.0.2/dist/js/bootstrap.bundle.min.js"
+        integrity="sha384-MrcW6ZMFYlzcLA8Nl+NtUVF0sA7MsXsP1UyJoMp4YLEuNSfAP+JcXn/tWtIaxVXM"
+        crossorigin="anonymous"></script>
+
+    <!-- Option 2: Separate Popper and Bootstrap JS -->
+    <!--
+    <script src="https://cdn.jsdelivr.net/npm/@popperjs/core@2.9.2/dist/umd/popper.min.js" integrity="sha384-IQsoLXl5PILFhosVNubq5LC7Qb9DXgDA9i+tQ8Zj3iwWAwPtgFTxbJ8NT4GN1R8p" crossorigin="anonymous"></script>
+    <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.0.2/dist/js/bootstrap.min.js" integrity="sha384-cVKIPhGWiC2Al4u+LWgxfKTRIcfu0JTxR+EQDz/bgldoEyl4H0zUF0QKbrJ0EcQF" crossorigin="anonymous"></script>
+    -->
+    <script src="https://code.jquery.com/jquery-3.5.1.slim.min.js"
+        integrity="sha384-DfXdz2htPH0lsSSs5nCTpuj/zy4C+OGpamoFVy38MVBnE+IbbVYUew+OrCXaRkfj"
+        crossorigin="anonymous"></script>
+    <script src="https://cdn.jsdelivr.net/npm/popper.js@1.16.0/dist/umd/popper.min.js"
+        integrity="sha384-Q6E9RHvbIyZFJoft+2mJbHaEWldlvI9IOYy5n3zV9zzTtmI3UksdQRVvoxMfooAo"
+        crossorigin="anonymous"></script>
+    <script src="https://stackpath.bootstrapcdn.com/bootstrap/4.5.0/js/bootstrap.min.js"
+        integrity="sha384-OgVRvuATP1z7JjHLkuOU7Xw704+h835Lr+6QL9UvYjZE3Ipu6Tp75j7Bh/kR0JKI"
+        crossorigin="anonymous"></script>
+
+    <script>
+        function AddandUpdate()
+        {
+            tit = document.getElementById("title").value;
+            desc = document.getElementById("description").value;
+            if(localStorage.getItem('itemsJson')==null)
+            {
+                itemsJsonArray = [];
+                itemsJsonArray.push([tit,desc]);
+                localStorage.setItem('itemsJson', JSON.stringify(itemsJsonArray));
+            }
+            else{
+                itemsJsonArraytemp = localStorage.getItem('itemsJson');
+                itemsJsonArray = JSON.parse(itemsJsonArraytemp);
+                itemsJsonArray.push([tit,desc]);
+                localStorage.setItem('itemsJson', JSON.stringify(itemsJsonArray));
+            }
+            update();
+        }
+        function update()
+        {
+            console.log("Updating list...")
+            tit = document.getElementById("title").value;
+            desc = document.getElementById("description").value;
+            if(localStorage.getItem('itemsJson')==null)
+            {
+                itemsJsonArray = [];
+                localStorage.setItem('itemsJson', JSON.stringify(itemsJsonArray));
+            }
+            else{
+                itemsJsonArraytemp = localStorage.getItem('itemsJson');
+                itemsJsonArray = JSON.parse(itemsJsonArraytemp);
+                localStorage.setItem('itemsJson', JSON.stringify(itemsJsonArray));
+            }
+
+            let tableBody = document.getElementById('tableBody');
+            let str=""
+            itemsJsonArray.forEach((element, index) => {
+                str+= `
+                <tr>
+                <th scope="row">${index + 1}</th>
+                <td>${element[0]}</td>
+                <td>${element[1]}</td>
+                <td><button class="btn btn-sm btn-primary" onclick="deleteItem(${index})">Delete</button></td>
+                </tr> 
+                `
+            });
+            tableBody.innerHTML=str;
+        }
+        add=document.getElementById("add");
+        add.addEventListener("click", AddandUpdate);
+        update();
+
+        function deleteItem(itemIndex){
+            console.log("deleting..");
+
+            itemsJsonArraytemp = localStorage.getItem('itemsJson');
+            itemsJsonArray = JSON.parse(itemsJsonArraytemp);
+            itemsJsonArray.splice(itemIndex,1);
+            localStorage.setItem('itemsJson', JSON.stringify(itemsJsonArray));
+            update();
+        }
+
+        function clearStorage()
+        {
+            if (confirm("Do you areally want to clear?"))
+            {
+                console.log("clearing list..");
+                localStorage.clear();
+                update();
+            }
+            else{
+                console.log("clearing unsuccessfull..");
+                update();
+            }
+            
+        }
+
+        
+    </script>
+</body>
+
+</html>
