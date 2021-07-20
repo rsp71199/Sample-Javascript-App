@@ -1,1 +1,1 @@
-Javascript Project
+TODO List: Sample Javascript Project
